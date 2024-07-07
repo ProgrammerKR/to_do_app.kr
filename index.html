@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .todo-container {
+            width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .todo-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .todo-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .todo-form input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .todo-form button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width:145px;
+            height:50px;
+            margin-left:10px;
+        }
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .todo-item button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="todo-container">
+        <h1>To-Do List</h1>
+        <form class="todo-form" id="todoForm">
+            <input type="text" id="todoInput" placeholder="Enter a task">
+          <br><br>
+            <button type="submit">Add Task</button>
+        </form>
+        <ul class="todo-list" id="todoList">
+            <!-- Tasks will be added dynamically here -->
+        </ul>
+    </div>
+
+    <script>
+        const todoForm = document.getElementById('todoForm');
+        const todoInput = document.getElementById('todoInput');
+        const todoList = document.getElementById('todoList');
+
+        todoForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const taskName = todoInput.value.trim();
+            if (taskName === '') {
+                alert('Please enter a task.');
+                return;
+            }
+
+            addTask(taskName);
+            todoInput.value = '';
+        });
+
+        function addTask(taskName) {
+            const taskId = Date.now();
+            const taskHTML = `
+                <li class="todo-item" id="task-${taskId}">
+                    <span>${taskName}</span>
+                    <button onclick="deleteTask(${taskId})">Delete</button>
+                </li>
+            `;
+            todoList.innerHTML += taskHTML;
+        }
+
+        function deleteTask(taskId) {
+            const task = document.getElementById(`task-${taskId}`);
+            task.remove();
+        }
+    </script>
+
+</body>
+</html>
